@@ -14,12 +14,13 @@ const useVideoPreloader = (videoUrls: string[]) => {
         if (isCancelled) break;
 
         const video = document.createElement("video");
+        video.crossOrigin = "anonymous"; // << important
         video.src = videoUrls[i];
         video.preload = "auto";
 
         try {
           await new Promise<void>((resolve, reject) => {
-            video.addEventListener("canplaythrough", () => resolve(), {
+            video.addEventListener("loadeddata", () => resolve(), {
               once: true,
             });
             video.addEventListener(
@@ -30,7 +31,6 @@ const useVideoPreloader = (videoUrls: string[]) => {
           });
         } catch (error) {
           console.error(error);
-          // Continue to next video even if current fails
         }
 
         loadedVideos.push(video);
