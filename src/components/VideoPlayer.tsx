@@ -22,7 +22,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     const videoElement = videoRef.current;
 
     try {
-      // Instead of copying only src, fully clone the video element
       videoElement.src = preloadedVideo.currentSrc || preloadedVideo.src;
       videoElement.load();
 
@@ -30,7 +29,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
           console.error("Autoplay prevented:", error);
-          // Optionally show a play button
         });
       }
     } catch (error) {
@@ -40,7 +38,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     return () => {
       if (videoElement) {
         videoElement.pause();
-        videoElement.removeAttribute("src"); // Correct way to remove src
+        videoElement.removeAttribute("src");
         videoElement.load();
       }
     };

@@ -1,19 +1,17 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from 'react';
 
 interface VideoContextType {
-  videoElements: HTMLVideoElement[];
-  setVideoElements: (videos: HTMLVideoElement[]) => void;
+  videoUrls: string[];
+  setVideoUrls: (urls: string[]) => void;
 }
 
 const VideoContext = createContext<VideoContextType | undefined>(undefined);
 
-export const VideoProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [videoElements, setVideoElements] = useState<HTMLVideoElement[]>([]);
+export const VideoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [videoUrls, setVideoUrls] = useState<string[]>([]);
 
   return (
-    <VideoContext.Provider value={{ videoElements, setVideoElements }}>
+    <VideoContext.Provider value={{ videoUrls, setVideoUrls }}>
       {children}
     </VideoContext.Provider>
   );
@@ -21,8 +19,6 @@ export const VideoProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export const useVideoContext = () => {
   const context = useContext(VideoContext);
-  if (!context) {
-    throw new Error("useVideoContext must be used inside a VideoProvider");
-  }
+  if (!context) throw new Error('useVideoContext must be used inside a VideoProvider');
   return context;
 };

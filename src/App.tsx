@@ -1,11 +1,9 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import PlayerPage from "./pages/PlayerPage";
-//@ts-ignore
 import { VideoProvider } from "./context/VideoProvider";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <VideoProvider>
       <Router>

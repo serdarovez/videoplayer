@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface StartButtonProps {
   onClick: () => void;
@@ -6,13 +6,15 @@ interface StartButtonProps {
 
 const StartButton: React.FC<StartButtonProps> = ({ onClick }) => {
   return (
-    <button 
-      className="start-button"
-      onClick={onClick}
-      aria-label="Start video player"
-    >
-      START
-    </button>
+    <div className="start-button-container">
+      <button
+        className="start-button"
+        onClick={onClick}
+        aria-label="Start video player"
+      >
+        START
+      </button>
+    </div>
   );
 };
 

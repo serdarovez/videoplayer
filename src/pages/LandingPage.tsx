@@ -1,41 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useVideoPreloader from "../hooks/useVideoPreloader";
-import { videoUrls } from "../utils/videoUrls";
-import StartButton from "../components/StartButton";
-import { useVideoContext } from "../context/VideoProvider";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { videoUrls } from '../utils/videoUrls';
+import { useVideoContext } from '../context/VideoProvider';
+import { useVideoPreloader } from '../hooks/useVideoPreloader';
 
-const LandingPage: React.FC = () => {
+const LandingPage = () => {
   const navigate = useNavigate();
-  const [startClicked, setStartClicked] = useState(false);
-  const { loadingProgress, isComplete, videoElements } =
-    useVideoPreloader(videoUrls);
-  const { setVideoElements: saveVideos } = useVideoContext();
+  const [start, setStart] = useState(false);
+  const { progress, complete } = useVideoPreloader(videoUrls, start);
+  const { setVideoUrls } = useVideoContext();
 
   useEffect(() => {
-    if (isComplete && startClicked) {
-      saveVideos(videoElements); // Save preloaded videos globally
-      navigate("/player");
+    if (complete) {
+      setVideoUrls(videoUrls);
+      navigate('/player');
     }
-  }, [isComplete, startClicked, navigate, videoElements, saveVideos]);
-
-  const handleStart = () => {
-    setStartClicked(true);
-  };
+  }, [complete, navigate, setVideoUrls]);
 
   return (
     <div className="landing-page">
-      <h1>Video Player</h1>
-      {!startClicked ? (
-        <StartButton onClick={handleStart} />
+      {!start ? (
+        <button onClick={() => setStart(true)} className="start-button">
+          Start
+        </button>
       ) : (
-        <div className="loading-container">
-          <p>Loading videos... {Math.round(loadingProgress)}%</p>
+        <div className="progress-container">
+          <p className="progress-text">Loading Videos... {progress}%</p>
           <div className="progress-bar">
-            <div
-              className="progress"
-              style={{ width: `${loadingProgress}%` }}
-            ></div>
+            <div className="progress-fill" style={{ width: `${progress}%` }}></div>
           </div>
         </div>
       )}

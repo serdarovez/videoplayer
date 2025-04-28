@@ -1,32 +1,43 @@
-import React, { useState } from "react";
-import VideoPlayer from "../components/VideoPlayer";
-import { useVideoContext } from "../context/VideoProvider";
-import { videoUrls } from "../utils/videoUrls";
+import { useState, useRef, useEffect } from 'react';
+import { useVideoContext } from '../context/VideoProvider';
 
-const PlayerPage: React.FC = () => {
-  const { videoElements } = useVideoContext();
-  const [currentIndex, setCurrentIndex] = useState(0);
+const PlayerPage = () => {
+  const { videoUrls: cachedUrls } = useVideoContext();
+  const [index, setIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % videoUrls.length);
-  };
+  useEffect(() => {
+    if (!videoRef.current) return;
 
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + videoUrls.length) % videoUrls.length);
-  };
+    const video = videoRef.current;
+    video.src = cachedUrls[index];
+    video.load();
 
-  if (videoElements.length === 0) {
-    return <div>Loading videos...</div>; // fallback if somehow empty
-  }
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((error) => {
+        console.error('Autoplay error:', error);
+      });
+    }
+  }, [index, cachedUrls]);
+
+  const nextVideo = () => setIndex((i) => (i + 1) % cachedUrls.length);
+  const prevVideo = () => setIndex((i) => (i - 1 + cachedUrls.length) % cachedUrls.length);
 
   return (
     <div className="player-page">
-      <VideoPlayer
-        videoElements={videoElements}
-        currentIndex={currentIndex}
-        onNext={handleNext}
-        onPrevious={handlePrevious}
+      <video
+        ref={videoRef}
+        playsInline
+        muted
+        loop
+        autoPlay
+        className="video-element"
       />
+      <div className="controls">
+        <button onClick={prevVideo} className="control-button">Previous</button>
+        <button onClick={nextVideo} className="control-button">Next</button>
+      </div>
     </div>
   );
 };
