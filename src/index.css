@@ -2,7 +2,8 @@
 body, html, #root {
   margin: 0;
   padding: 0;
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* General page layout */
@@ -11,9 +12,11 @@ body, html, #root {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
+  height: 100vh;
   background-color: #f8f9fa;
+}
+.video-player-container{
+  flex: 1;
 }
 
 /* Start Button */
@@ -64,6 +67,7 @@ body, html, #root {
   max-width: 400px;
   background: black;
   border-radius: 10px;
+  height: 100%;
 }
 
 /* Controls */
