@@ -6,21 +6,22 @@ This project is a **React application** that preloads multiple videos, displays 
 
 ## 🧭 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Components Explained](#components-explained)
-- [Hooks Explained](#hooks-explained)
-- [Routing Explained](#routing-explained)
-- [Important Notes](#important-notes)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Components Explained](#-components-explained)
+- [Hooks Explained](#-hooks-explained)
+- [Context Explained](#-context-explained)
+- [Routing Explained](#-routing-explained)
+- [Important Notes](#-important-notes)
 
 ---
 
 ## 📌 Overview
 
-This application allows users to preload videos into memory as Blob URLs. During preloading, a loading percentage is shown. Once all videos are loaded, the user is redirected to a player page where they can play, pause, and navigate between the videos.
+This application allows users to preload videos into memory as Blob URLs. During preloading, a loading percentage is shown. Once all videos are loaded, the user is redirected to a player page where they can play, pause, and navigate through the videos.
 
 ## ✨ Features
 
@@ -48,13 +49,14 @@ This application allows users to preload videos into memory as Blob URLs. During
     videoUrls.ts (Contains the list of video URLs)
   App.tsx
   index.tsx
+  index.css
 ```
 
 ## ⚙️ Installation
 
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+git clone https://github.com/serdarovez/videoplayer.git
+cd videoplayer
 npm install
 npm start
 ```
@@ -113,18 +115,6 @@ Redirection to `/player` occurs when videos finish loading.
 - **Autoplay Policy:** Errors from autoplay prevention are caught.
 - **Responsive UI:** Add styles to `.video-element`, `.controls`, etc.
 - **Error Handling:** Errors during fetch are logged, other videos continue.
-
-## 🚧 Future Improvements
-
-- 📱 Mobile touch gestures.
-- 🔊 Volume/fullscreen controls.
-- 🎨 UI improvements and animations.
-- 🖼️ Thumbnails support.
-- 🧩 Fallback video handling.
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
 
 ---
 
