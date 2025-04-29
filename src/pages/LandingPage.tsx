@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { videoUrls } from '../utils/videoUrls';
+import { videoUrls as originalVideoUrls } from '../utils/videoUrls';
 import { useVideoContext } from '../context/VideoProvider';
 import { useVideoPreloader } from '../hooks/useVideoPreloader';
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const [start, setStart] = useState(false);
-  const { progress, complete } = useVideoPreloader(videoUrls, start);
+  const { progress, complete, blobUrls } = useVideoPreloader(originalVideoUrls, start);
   const { setVideoUrls } = useVideoContext();
 
   useEffect(() => {
     if (complete) {
-      setVideoUrls(videoUrls);
+      setVideoUrls(blobUrls); // ← Pass blobUrls here
       navigate('/player');
     }
-  }, [complete, navigate, setVideoUrls]);
+  }, [complete, blobUrls, navigate, setVideoUrls]);
 
   return (
     <div className="landing-page">

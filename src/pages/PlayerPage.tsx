@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useVideoContext } from '../context/VideoProvider';
 
 const PlayerPage = () => {
-  const { videoUrls: cachedUrls } = useVideoContext();
+  const { videoUrls } = useVideoContext(); // ← These are Blob URLs now
   const [index, setIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -10,19 +10,15 @@ const PlayerPage = () => {
     if (!videoRef.current) return;
 
     const video = videoRef.current;
-    video.src = cachedUrls[index];
+    video.src = videoUrls[index];
     video.load();
+    video.play().catch((error) => {
+      console.error('Autoplay error:', error);
+    });
+  }, [index, videoUrls]);
 
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch((error) => {
-        console.error('Autoplay error:', error);
-      });
-    }
-  }, [index, cachedUrls]);
-
-  const nextVideo = () => setIndex((i) => (i + 1) % cachedUrls.length);
-  const prevVideo = () => setIndex((i) => (i - 1 + cachedUrls.length) % cachedUrls.length);
+  const nextVideo = () => setIndex((i) => (i + 1) % videoUrls.length);
+  const prevVideo = () => setIndex((i) => (i - 1 + videoUrls.length) % videoUrls.length);
 
   return (
     <div className="player-page">

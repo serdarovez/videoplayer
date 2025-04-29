@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 
 interface VideoContextType {
-  videoUrls: string[];
+  videoUrls: string[]; // Now Blob URLs
   setVideoUrls: (urls: string[]) => void;
 }
 
